@@ -99,7 +99,7 @@ function next_imperial (text) {
 }
 
 function grab_number (text, start) {
-	var add = /\d|.|,|\s/;
+	var add = /\d|\.|,|\s/;
 	var skip = /[a-zA-Z]/;
 	var value = "";
 	text = text.split('');
