@@ -29,18 +29,26 @@ var conversion_list = [
 	[" mph","kph",1.609]
 	];
  
+ function AddOriginalMeasurement(x) {
+    var text = document.createElement("TEXTAREA");
+    text.id = "673ValueDIsplayerOfThePluginInExtension";
+    text.innerHTML = "Original value: "+x;
+    var event = event || window.event;
+    text.style.position = "absolute";
+    text.style.left = 0;//event.clientX;
+    text.style.top = 0;//event.clientY;
+    text.style.opacity = "0.5";
+}
+
+function RemoveOriginalMeasurement(x) {
+    var element = document.getElementById("673ValueDIsplayerOfThePluginInExtension");
+    element.parentNode.removeChild(element);
+}
+ 
  function grab_number (text, start) {
 	var add = /[0-9]|[.]|,|\s/;
 	var value = "";
-	text = text.split('');
-	while (start > 0) {
-		start--;
-		if(text[start].match(add) != null) {
-			value = text[start] + value;
-		} else  {
-			start = -1; //exit loop
-		}
-	}
+	for(var i=0; text[start+i].match(add) != null;i++) {value = value + text[start];}
 	if(value.length == 0){value = "0";}
 	return value;
 }
@@ -77,7 +85,7 @@ console.log("RU 2: " + num);
 var convert = parseFloat(num);
 console.log("RU 3");
 for (var i = 0;i < conversion_list.length;i++) {
-		temp =s.search(conversion_list[i][0]);
+		temp =s.indexOf(conversion_list[i][0]);
 		if(temp > 0){unitID = i;}
 }
 console.log("RU 4 : " + unitID);
@@ -97,15 +105,18 @@ while (nextUnit[0] > 0) {
 		console.log("Unit replaced with metric val " + metric);
 		var front = text.substring(0, nextUnit[0]);
 		var back = text.substring(nextUnit[0]+imperialStr.length,text.length);
-		text = front + metric + back;
+		text = front + metric + back 
 		console.log("***** UNIT REPlACED ***** :: " + imperialStr+ " :: " + metric);
 		nextUnit = next_unit_index(text);
+		
+		AddOriginalMeasurement(text.substr(nextUnit[0],nextUnit[0]+imperialStr.length));
+		
 }
 //console.log("Finished Converting");
 return text;
 }
 
-function next_unit_index (text) {
+function next_unit_index (text) { //TODO: Use regex string to find
 	var place_unit = new Array(2); // [0] = location of unit in text; [1] = unit that was found
 	place_unit[0] = -1;
 	place_unit[1] = 0;
