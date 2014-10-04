@@ -1,0 +1,9 @@
+{
+  "manifest_version": 2,
+  "name": "Imperial to Metric",
+  "version": "1.0",
+  "description": "Converts all imperial measurements to metric values.",
+  "page_action": {
+  "default_title": "Imperial to Metric"
+  }
+}
