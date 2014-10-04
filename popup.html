@@ -106,13 +106,33 @@
 						}
 					}
 			}
+
+			function calculate()
+			{
+				var empire = document.getElementById("imperialContainer");
+				var empVal = empire.value;
+				var si = document.getElementById("output");
+
+				var stringToInt = parseFloat(this.value);
+				for(var i = 0; len = conversion_list.length; i<len; i++)
+					{
+						for(var t =0; lent = conversion_list[i].length; i<lent; i++)
+						{
+							if(conversion_list[i][t][imp]===value)
+							{
+								output.value = conversion_list[i][t].convert(empVal);
+								return;
+							}
+						}
+					}
+			}
 		</script>
 
 	</head>
 	<body>
 
 		
-		<input type="text" id="input" > </input> <input type="text" id="output" readonly> </input>
+		<input type="text" id="input" onchange="calculate(this)"> </input> <input type="text" id="output" readonly> </input>
 		<select id="categories" onchange="updateContainers()">
 			<option value="All">--</option>
 			<option value="length">Length</option>
