@@ -82,7 +82,7 @@ console.log("73");
 	}
 
 function grab_imperial (text) {
-	var place_unit = next_imperial(text);
+	var place_unit = next_unit_index(text);
 	var number = -1;
 	var unit = "";
 	console.log("80");
@@ -94,15 +94,17 @@ function grab_imperial (text) {
 	return number+unit;
 }
 
-function next_imperial (text) {
+function next_unit_index (text) {
 	var place_unit = new Array(2); // [0] = location of unit in text; [1] = unit that was found
 	place_unit[0] = -1;
 	place_unit[1] = 0;
 	console.log("93");
-	do {
+	while (place_unit[0] == -1 && place_unit[1] < conversion_list.length) {
+		//console.log(place_unit[1] + " " + place_unit[0])
 		place_unit[0] = text.search(conversion_list[place_unit[1]][0]);//
+		place_unit[1]++;
 		
-	} while (place_unit[0] == -1 && place_unit[1] < conversion_list.length);
+	}
 	console.log("98");
 	return place_unit;
 }
@@ -128,8 +130,6 @@ function grab_number (text, start) {
 
 //Run main html parser
 var EntirePage = "";
-console.log("test");
-alert("test");
 console.log("Checkpoint 1: Started");
 try{
 	var array = document.body.getElementsByTagName("*");
