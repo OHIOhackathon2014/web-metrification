@@ -5,6 +5,10 @@
   "description": "Convert imperial values to their metric equivalents, and enter the 21st century. Imperial units still available on hover.",
   "version": "1.0",
 
+  "icons": {"16": "icon16.png",
+	"48": "icon48.png",
+	"128": "icon128.png"},
+
     "content_scripts": [
     {
       "matches": [
@@ -14,5 +18,5 @@
       "js": ["/js/Main.js"]
     }
   ]
-  
+ 
 }
