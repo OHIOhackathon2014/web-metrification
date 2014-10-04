@@ -51,7 +51,8 @@ for(i=0; i<s.length; i++) {
 
 	    number+=(Math.pow(0.1,i-i_start))*(s.charCodeAt(i)-48);
 		console.log("48");
-	  }} else if(s.charCodeAt(i)==45) {
+	}
+  } else if(s.charCodeAt(i)==45) {
 	  console.log("55");
 	  is_negative = true;
 	} else if(s.charAt(i)!= null){
@@ -107,14 +108,23 @@ return "<hover original='" + number + " " + unit + "' onmouseover='AddOriginalMe
 
 /////////////////////////////////////////////Steve's convert
 function convert (text) {
-//	console.log("64");
-	text = text.toLowerCase();
-	var imperial = grab_imperial(text);
-	while (imperial != -1) { 
-		var metric = replace_unit(imperial);
-		text.replace(imperial, metric);
-		console.log("***** UNIT REPlACED ***** \"" + imperial + "\" \"" + metric + "\"");
-		imperial = grab_imperial(text);
+	if (text != "") { 
+		text = text.toLowerCase();
+		var imperial = grab_imperial(text);
+		if (imperial != -1) {
+
+			var metric = replace_unit(imperial);
+			var impIndex  = text.search(imperial);
+			var front = text.substring(0, impIndex);
+			var back = text.substring(impIndex+imperial.length+1,text.length);
+		
+			front = convert(front);
+			back = convert(back);
+			text = front + metric + back;
+			
+			console.log("***** UNIT REPlACED ***** \"" + imperial + "\" \"" + metric + "\"");
+			imperial = grab_imperial(text);
+		}
 	} 
 	console.log("***** FINISHED CONVERTING *****");
 	return text;
@@ -124,7 +134,6 @@ function grab_imperial (text) {
 	var place_unit = next_unit_index(text);
 	var number = -1;
 	var unit = "";
-//	console.log("80");
 	if (place_unit[0] != -1 ) {
 		number = grab_number(text, place_unit[0]);
 		unit = conversion_list[place_unit[1]][0];
@@ -182,7 +191,7 @@ try{
 			while(node != null){
 				if(node.nodeType == 3){
 //					console.log("checkpoint 3.5: In if statement of subloop");
-					note.textContent = convert(node.textContent);
+					node.textContent = convert(node.textContent);
 				}
 			node = node.nextSibling;
 			}
@@ -192,7 +201,4 @@ console.log("checkpoint 6: exiting loop hell");
 catch(err){
 	console.log("EROR:" +err.toString());
 }
-
-NewP.appendChild(Text);
-document.body.appendChild(NewP);
 console.log("checkpoint 7: Exiting");
