@@ -179,17 +179,10 @@ try{
     		element = array[i];
 			var node =  element.childNodes[0];
 			while(node != null){
-<<<<<<< HEAD
 			if(node.nodeType == 3){
 //				console.log("checkpoint 3.5: In if statement of subloop");
            		EntirePage += node.textContent;
 				convert(node.textContent);
-=======
-				if(node.nodeType == 3){
-//					console.log("checkpoint 3.5: In if statement of subloop");
-	           			EntirePage += node.textContent;
-					node.textContent = convert(node.textContent);
->>>>>>> 16a52747e5b253cafa16f31deb9dd0fa19c45e9c
 				}
 			node = node.nextSibling;
 			}
