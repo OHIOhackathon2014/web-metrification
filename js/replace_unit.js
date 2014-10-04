@@ -59,6 +59,6 @@ for(int i=0;i<s.length();i++) {
   
 // unit fixing
 
-return "<hover original=" + number + " " + unit + ">" + m_number + " " + m_unit + "</hover>"
+return "<hover original='" + number + " " + unit + "' onmouseover='AddOriginalMeasurement(this)' onmouseout='RemoveOriginalMeasurement(this)'>" + m_number + " " + m_unit + "</hover>"
 }
 
