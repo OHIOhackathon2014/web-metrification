@@ -37,24 +37,33 @@ function replace_unit(s) {
   var is_negative = false;
 console.log("37");
 for(i=0; i<s.length; i++) {
+	console.log("40");
     if(57>=s.charCodeAt(i) && s.charCodeAt(i)>=48) {
 //TODO add decimal support	
+	  console.log("44");
       number*=10.0;
       number+=s.charCodeAt(i)-48; // convert to int
+
     } else if(s.charCodeAt(i)==46) {
+	console.log("48");
 	  i_start = i;
 	  while(++i<s.length && 57>=s.charCodeAt(i) && s.charCodeAt(i)>=48) {
+
 	    number+=(Math.pow(0.1,i-i_start))*(s.charCodeAt(i)-48);
+		console.log("48");
 	  }} else if(s.charCodeAt(i)==45) {
+	  console.log("55");
 	  is_negative = true;
-	} else {
+	} else if(s.charAt(i)!= null){
 	//TODO add in punct/wht spc checking
-      unit+=(s.charAt(i));
+	console.log("59");
+    unit += s.charAt(i);
     }
 
-    console.log(chrome.extension.getViews());
+    //console.log(chrome.extension.getViews());
     console.log("checkpoint 1: done finding decimal number");
 }
+
 	for(j=0; j<conversion_list.length; j++) {
     if(conversion_list[j][0]==(unit)) {
 	  m_unit = conversion_list[j][1];
@@ -62,6 +71,7 @@ for(i=0; i<s.length; i++) {
 	  j = conversion_list.length;
     }
   }
+ console.log("66");
   if(unit == "°f" || unit=="fahrenheit"){return replace_temp_unit(s);}
 // unit fixing
 if(is_negative){m_number*=-1;}
@@ -164,27 +174,23 @@ try{
 	var array = document.body.getElementsByTagName("*");
 	var element;
 	var length = array.length;
-	var i;
 //	console.log("checkpoint 2: before first loop");
-	for(i=0; i<length;i++){
+	for(var i=0; i<length;i++){
     		element = array[i];
 			var node =  element.childNodes[0];
-//			console.log("checkpoint 3: before subloop");
 			while(node != null){
 			if(node.nodeType == 3){
 //				console.log("checkpoint 3.5: In if statement of subloop");
            		EntirePage += node.textContent;
-				node.textContent = convert(node.textContent);
+				convert(node.textContent);
 				}
 			node = node.nextSibling;
 			}
-//	console.log("checkpoint 5: inbetween loops");
 	}
 console.log("checkpoint 6: exiting loop hell");
-
 }
 catch(err){
-	console.log("EROR");
+	console.log("EROR:" +err.toString());
 }
 
 var NewP = document.createElement("p");
