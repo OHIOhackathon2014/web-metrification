@@ -92,7 +92,7 @@ function grab_number (text, start) {
 	text = text.split('');
 	while (start > 0) {
 		start--;
-		if(text[start].match("/^[0-9]+^.i+^,+^\s$/")) {
+		if(text[start].match("/^[0-9]+^.+^,+^\s$/")) {
 			value = text[start] + value;
 		} else if (text[start].match("/^[a-zA-Z]$/")) {
 			start = -1; //exit loop
@@ -113,6 +113,7 @@ function grab_imperial (text) {
 }
 
 //Run main html parser
+var EntirePage = "";
 try{
 var array = document.body.getElementsByTagName("*");
 var element;
@@ -121,7 +122,7 @@ for(var i=0; i<length;i++){
 element = array[i];
 var node =  element.childNodes[0];
 while(node != null){
-if(node.nodeType == 3){node.textContent = convert(node.textContent);}
+if(node.nodeType == 3){EntirePage += node.textContent; /*node.textContent = convert(node.textContent);*/}
 node = node.nextSibling;
 }
 }
@@ -136,7 +137,6 @@ document.body.appendChild(oNewP);
 }
 
 var NewP = document.createElement("p");
-var Text = document.createTextNode("Done!");
+var Text = document.createTextNode(EntirePage);
 NewP.appendChild(Text);
-NewP.style.fontSize = "xx-large";
 document.body.appendChild(NewP);

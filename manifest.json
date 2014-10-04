@@ -11,7 +11,7 @@
         "http://*/*",
         "https://*/*"],
       "css": [],
-      "js": ["/js/replace_unit.js","/js/convert.js","/js/Main.js"]
+      "js": ["/js/Main.js"]
     }
   ]
   
