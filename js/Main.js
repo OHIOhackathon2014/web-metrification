@@ -68,17 +68,14 @@ return "<hover original='" + number + " " + unit + "' onmouseover='AddOriginalMe
 /////////////////////////////////////////////Steve's convert
 function convert (text) {
 	console.log("64");
-	var index = 0; // unused
-	var imperial = grab_imperial(text); // i moved this
-	do { //****
-		//var imperial = grab_imperial(text); // Out of scope
-		if (imperial != -1) {
-			var metric = replace_unit(imperial);
-			text.replace(imperial, metric);
-		}
-		imperial = grab_imperial(text); //  i did this
-	} while (imperial != -1);
-console.log("73");
+	var imperial = grab_imperial(text);
+	while (imperial != -1) { 
+		var metric = replace_unit(imperial);
+		text.replace(imperial, metric);
+		console.log("***** UNIT REPlACED ***** \"" + imperial + "\" \"" + metric + "\"");
+		imperial = grab_imperial(text);
+	} 
+	console.log("***** FINISHED CONVERTING *****");
 	}
 
 function grab_imperial (text) {
@@ -90,8 +87,8 @@ function grab_imperial (text) {
 		number = grab_number(text, place_unit[0]);
 		unit = conversion_list[place_unit[1]][0];
 	}
-	console.log("85");
-	return number+unit;
+	console.log("grab_imperial number+unit: " + number + unit);
+	return "" + number + unit;
 }
 
 function next_unit_index (text) {
@@ -105,7 +102,7 @@ function next_unit_index (text) {
 		place_unit[1]++;
 		
 	}
-	console.log("98");
+	console.log("next_unit_index place_unit: " + place_unit);
 	return place_unit;
 }
 
@@ -123,7 +120,7 @@ function grab_number (text, start) {
 			start = -1; //exit loop
 		}
 	}
-	console.log("114");
+	console.log("grab_number value: "+ value);
 	return value;
 }
 
