@@ -1,0 +1,8 @@
+<!ENTITY english_english_dictionary.label "Your localized menuitem">
+<!ENTITY english_english_dictionaryContext.label "Your Menuitem">
+<!ENTITY english_english_dictionaryContext.accesskey "Y">
+<!ENTITY english_english_dictionaryToolbarButton.label "Your Toolbar Button">
+<!ENTITY english_english_dictionaryToolbarButton.tooltip "This is your toolbar button!">
+<!ENTITY english_english_dictionarySidebar.label "Your Sidebar">
+<!ENTITY english_english_dictionaryToolbar.name  "example">
+<!ENTITY english_english_dictionaryToolbar.label "This is an example toolbar. You can hide it under View &gt; toolbars &gt; &english_english_dictionaryToolbar.name;">

@@ -1,0 +1,4 @@
+content   metrication                 chrome/content/
+skin      metrication   classic/1.0   chrome/skin/
+locale    metrication   en-US         chrome/locale/en-US/
+overlay	chrome://browser/content/browser.xul	chrome://metrication/content/ff-overlay.xul

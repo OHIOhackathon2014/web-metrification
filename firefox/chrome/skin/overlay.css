@@ -1,0 +1,21 @@
+/* This is just an example.  You shouldn't do this. */
+#english_english_dictionary-hello
+{
+}
+#english_english_dictionary-toolbar-button
+{
+  list-style-image: url("chrome://english_english_dictionary/skin/toolbar-button.png");
+  -moz-image-region: rect(0px 24px 24px 0px);
+}
+#english_english_dictionary-toolbar-button:hover
+{
+  -moz-image-region: rect(24px 24px 48px  0px);
+}
+[iconsize="small"] #english_english_dictionary-toolbar-button
+{
+  -moz-image-region: rect( 0px 40px 16px 24px);
+}
+[iconsize="small"] #english_english_dictionary-toolbar-button:hover
+{
+  -moz-image-region: rect(24px 40px 40px 24px);
+}

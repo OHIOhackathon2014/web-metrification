@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://english_english_dictionary/skin/overlay.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://english_english_dictionary/locale/overlay.dtd">
+<overlay id="english_english_dictionary-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="ff-overlay.js"/>
+  <stringbundleset id="stringbundleset">
+    <stringbundle id="english_english_dictionary-strings" src="chrome://english_english_dictionary/locale/overlay.properties"/>
+  </stringbundleset>
+ 
+     <toolbar id="PersonalToolbar" >
+   <toolbarbutton id="dif"  tooltiptext="English English Dictionary"  oncommand="LipoEnglishEnglishDictionary.open_local_window();" image="http://lipocodes.com/Dictionary/EnglishEnglishDictionary/icon.png" />
+   
+   
+   
+</toolbar>
+ 
+
+  
+</overlay>
