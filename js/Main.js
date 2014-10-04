@@ -133,6 +133,7 @@ function grab_imperial (text) {
 }
 
 function next_unit_index (text) {
+	text = text.toLowerCase();
 	var place_unit = new Array(2); // [0] = location of unit in text; [1] = unit that was found
 	place_unit[0] = -1;
 	place_unit[1] = 0;
