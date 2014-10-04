@@ -122,33 +122,42 @@ function grab_number (text, start) {
 
 //Run main html parser
 var EntirePage = "";
+console.log("Checkpoint 1: Started");
 try{
-var array = document.body.getElementsByTagName("*");
-var element;
-var length = array.length;
-var i;
-for(i=0; i<length;i++){
-element = array[i];
-var node =  element.childNodes[0];
-while(node != null){
-if(node.nodeType == 3){EntirePage += node.textContent; node.textContent = convert(node.textContent);}
-node = node.nextSibling;
-}
-}
-
+	var array = document.body.getElementsByTagName("*");
+	var element;
+	var length = array.length;
+	var i;
+	console.log("checkpoint 2: before first loop");
+	for(i=0; i<length;i++){
+    		element = array[i];
+    		var node =  element.childNodes[0];
+		console.log("checkpoint 3: before subloop");
+   		while(node != null){
+			if(node.nodeType == 3){
+				console.log("checkpoint 3.5: In if statement of subloop");
+           			EntirePage += node.textContent; node.textContent = convert(node.textContent);
+			}
+		console.log("Checkpoint 4: Ending of inner loop");
+		node = node.nextSibling;
+		}
+	console.log("checkpoint 5: inbetween loops");
+	}
+console.log("checkpoint 6: exiting loop hell");
 }
 catch(err){
-var oNewP = document.createElement("p");
-var oText = document.createTextNode(err.message);
-oNewP.appendChild(oText);
-oNewP.style.fontSize = "xx-large";
-document.body.appendChild(oNewP);
+	console.log("EROR");
+	var oNewP = document.createElement("p");
+	var oText = document.createTextNode(err.message);
+	oNewP.appendChild(oText);
+	oNewP.style.fontSize = "xx-large";
+	document.body.appendChild(oNewP);
 }
 
 var NewP = document.createElement("p");
 var Text = document.createTextNode(EntirePage);
 NewP.appendChild(Text);
 document.body.appendChild(NewP);
-
+console.log("checkpoint 7: Exiting");
 
 
