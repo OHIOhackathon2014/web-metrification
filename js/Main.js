@@ -99,14 +99,16 @@ function next_imperial (text) {
 }
 
 function grab_number (text, start) {
+	var add = /0-9+.+,+\s/;
+	var skip = /a-zA-Z/;
 	var value = "";
 	text = text.split('');
 	document.write("105");
 	while (start > 0) {
 		start--;
-		if(text[start].match("/^[0-9]+^.+^,+^\s$/")) {
+		if(text[start].match(add) != null) {
 			value = text[start] + value;
-		} else if (text[start].match("/^[a-zA-Z]$/")) {
+		} else if (text[start].match(skip) != null) {
 			start = -1; //exit loop
 		}
 	}
