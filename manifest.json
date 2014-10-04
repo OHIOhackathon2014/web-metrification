@@ -9,6 +9,11 @@
 	"48": "icon48.png",
 	"128": "icon128.png"},
 
+   "browser action": {
+	"default icon": "icon48.png",
+	"default_popup": "popup.html"
+    },
+
     "content_scripts": [
     {
       "matches": [
