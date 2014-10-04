@@ -117,7 +117,7 @@ function convert (text) {
 		imperial = grab_imperial(text);
 	} 
 	console.log("***** FINISHED CONVERTING *****");
-	}
+}
 
 function grab_imperial (text) {
 	var place_unit = next_unit_index(text);
@@ -148,8 +148,7 @@ function next_unit_index (text) {
 }
 
 function grab_number (text, start) {
-	var add = /\d|\.|,|\s/;
-	var skip = /[a-zA-Z]/;
+	var add = /[0-9]|[.]|,|\s/;
 	var value = "";
 	text = text.split('');
 	console.log("105");
@@ -158,7 +157,7 @@ function grab_number (text, start) {
 	console.log(text[start].match(add) != null);
 		if(text[start].match(add) != null) {
 			value = text[start] + value;
-		} else if (text[start].match(skip) != null) {
+		} else  {
 			start = -1; //exit loop
 		}
 	}
@@ -179,10 +178,17 @@ try{
     		element = array[i];
 			var node =  element.childNodes[0];
 			while(node != null){
+<<<<<<< HEAD
 			if(node.nodeType == 3){
 //				console.log("checkpoint 3.5: In if statement of subloop");
            		EntirePage += node.textContent;
 				convert(node.textContent);
+=======
+				if(node.nodeType == 3){
+//					console.log("checkpoint 3.5: In if statement of subloop");
+	           			EntirePage += node.textContent;
+					node.textContent = convert(node.textContent);
+>>>>>>> 16a52747e5b253cafa16f31deb9dd0fa19c45e9c
 				}
 			node = node.nextSibling;
 			}
@@ -198,5 +204,3 @@ var Text = document.createTextNode(EntirePage);
 NewP.appendChild(Text);
 document.body.appendChild(NewP);
 console.log("checkpoint 7: Exiting");
-
-
