@@ -91,7 +91,7 @@ for (var i = 0;i < conversion_list.length;i++) {
 console.log("RU 4 : " + unitID);
 convert *= conversion_list[unitID][2];
 console.log("RU DONE");
-return " "+adjust_unit(convert,conversion_list[unitID][1])+" ";
+return " "+adjust_unit(convert+conversion_list[unitID][1])+" ";
 }
 
 /////////////////////////////////////////////Steve's convert
