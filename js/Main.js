@@ -49,14 +49,14 @@ for(i=0; i<s.length; i++) {
 	  is_negative = true;
 	} else {
 	//TODO add in punct/wht spc checking
-      unit.append(s.charAt(i));
+      unit+=(s.charAt(i));
     }
 
     console.log(chrome.extension.getViews());
     console.log("checkpoint 1: done finding decimal number");
 }
 	for(j=0; j<conversion_list.length; j++) {
-    if(conversion_list[j][0].equals(unit)) {
+    if(conversion_list[j][0]==(unit)) {
 	  m_unit = conversion_list[j][1];
 	  m_number = number * conversion_list[j][2];
 	  j = conversion_list.length;
@@ -82,7 +82,7 @@ for(i=0; i<s.length; i++) {
 	  }
 	} else {
 	//TODO add in punct/wht spc checking
-      unit.append(s.charAt(i));
+      unit+=(s.charAt(i));
     }
 	}
 	if(unit == "°f" || unit=="fahrenheit") {
