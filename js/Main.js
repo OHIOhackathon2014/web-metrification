@@ -32,7 +32,9 @@ var conversion_list = [
 function replace_unit(s) {
   //TODO format string
   s = s.trim();
+  s = s.toLowerCase();
   var number = 0.0, unit = "", m_number = 0.0, m_unit = "", i = 0,i_start = 0, j = 0;
+  var is_negative = false;
 console.log("37");
 for(i=0; i<s.length; i++) {
     if(57>=s.charCodeAt(i) && s.charCodeAt(i)>=48) {
@@ -43,7 +45,8 @@ for(i=0; i<s.length; i++) {
 	  i_start = i;
 	  while(++i<s.length && 57>=s.charCodeAt(i) && s.charCodeAt(i)>=48) {
 	    number+=(Math.pow(0.1,i-i_start))*(s.charCodeAt(i)-48);
-	  }
+	  }} else if(s.charCodeAt(i)==45) {
+	  is_negative = true;
 	} else {
 	//TODO add in punct/wht spc checking
       unit.append(s.charAt(i));
@@ -61,7 +64,7 @@ for(i=0; i<s.length; i++) {
   }
   if(unit == "°f" || unit=="fahrenheit"){return replace_temp_unit(s);}
 // unit fixing
-
+if(is_negative){m_number*=-1;}
 return "<hover original='" + number + " " + unit + "' onmouseover='AddOriginalMeasurement(this)' onmouseout='RemoveOriginalMeasurement(this)'>" + m_number + " " + m_unit + "</hover>";
 }
 
