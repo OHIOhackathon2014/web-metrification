@@ -131,7 +131,7 @@ function convert (text) {
 }
 
 function is_in_hover(text,index,imperial) {
-return (test.length>index+imperial.length) && (index>10) && (index+imperial.length!="\'") && (index-10,index != "original=\'");
+	return (test.length>index+imperial.length) && (index>10) && (index+imperial.length!="\'") && (index-10,index != "original=\'");
 }
 
 function grab_imperial (text) {
@@ -143,7 +143,13 @@ function grab_imperial (text) {
 		unit = conversion_list[place_unit[1]][0];
 	}
 	console.log("grab_imperial number+unit: " + number + unit);
-	return number + unit;
+	var regex = /\s[0-9]+[.]?[0-9]*\s[a-zA-Z]{0,7}[.]?/i;
+	
+	var imperial = number+unit;
+	if (imperial.search(regex) != 0 || text.search(imperial) == -1){
+		imperial = -1; //Return -1 if error occured
+	}
+	return imperial;
 }
 
 function next_unit_index (text) {
@@ -151,7 +157,6 @@ function next_unit_index (text) {
 	var place_unit = new Array(2); // [0] = location of unit in text; [1] = unit that was found
 	place_unit[0] = -1;
 	place_unit[1] = 0;
-//	console.log("93");
 	while (place_unit[0] == -1 && place_unit[1] < conversion_list.length) {
 		place_unit[0] = text.search(conversion_list[place_unit[1]][0]);
 		//if(is_in_hover(text,place_unit[0],conversion_list[place_unit[1]][0])) {place_unit[0]=-1;}
