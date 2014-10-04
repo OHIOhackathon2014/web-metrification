@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+
+  "name": "Metrication",
+  "description": "Convert imperial values to their metric equivalents, and enter the 21st century. Imperial units still available on hover.",
+  "version": "1.0",
+
+    "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"],
+      "css": [],
+      "js": ["/js/Main.js"]
+    }
+  ]
+  
+}

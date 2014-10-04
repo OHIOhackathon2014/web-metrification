@@ -1,12 +1,7 @@
 
-function parsePage() { 
 
-int paragraphCount = document.getElementsByTagName('p);
-for(int i=0;i<paragraphCount;i++){
-			
-
-}
-
-
-
-}
+var oNewP = document.createElement("p");
+var oText = document.createTextNode("OHHHHHHHH YEAAAAAAAAAAAAAAAAAAHHHHHHHHH!!!!!!!!!!");
+oNewP.appendChild(oText);
+oNewP.style.fontSize = "xx-large";
+document.body.appendChild(oNewP);
