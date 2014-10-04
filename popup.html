@@ -1,2 +1,52 @@
 <html>
+	<head>
+		<script>
+			var conversion_list = [
+       			 [{"inch","m",function()'0.0254x','length'},
+       			 {"inches","m",'0.0254x','length'},
+       			 {"in","m",'0.0254x','length'},
+       			 {"foot","m",'0.3048x','length'},
+       			 {"feet","m",'0.3048x','length'},
+       			 {"ft","m",'0.3048x','length'},
+       			 {"yard","m",'0.9144x','length'},
+       			 {"yd","m",'0.9144x','length'},
+       			 {"mile","m",'1609.34x','length'},
+       			 {"mi","m",'1609.34x','length'}],
+       			 [{"teaspoon","l",'0.004929x','volume'},
+       			 {"tsp","l",'0.004929x','volume'},
+       			 {"tablespoon","l",'0.01479x','volume'},
+       			 {"tbsp","l",'0.01479x','volume'},
+       			 {"fluid ounce","l",'0.02957x','volume'},
+       			 {"fl oz","l",'0.02957x','volume'},
+       			 {"cup","l",'0.2366x','volume'},
+       			 {"pint","l",'0.4732x','volume'},
+       			 {"quart","l",'0.9464*x','volume'},
+       			 {"gallon","l",'3.785*x','volume'}],
+       			 [{"ounce","g",'28.35*x','weight'},
+       			 {"oz","g",'28.35*x','weight'},
+       			 {"pound","g",'453.6*x','weight'},
+       			 {"lb","g",'453.6*x','weight'},
+       			 {"ton","g",'907185*x','weight'}],
+       			 [{"fahrenheit","°c","(x-32)*(5.0/9)",'temperature'},
+       			 {"°f","°c","(x-32)*(5.0/9)",'temperature'}],
+       			 [{"mph","kph","1.609x",'speed'}]
+       		        ];
+		</script>
+
+		<script>
+			
+		</script>
+
+	</head>
+	<body>
+
+		
+		<input type="text" id="input"> </input> <input type="text" id="output" readonly> </input> 
+		<select id="imperialContainer">
+			
+		</select>
+		<select id="metricContainer">
+
+		</select>
+	</body>
 </html>
