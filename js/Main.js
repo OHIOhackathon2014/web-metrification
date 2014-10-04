@@ -108,24 +108,22 @@ return "<hover original='" + number + " " + unit + "' onmouseover='AddOriginalMe
 
 /////////////////////////////////////////////Steve's convert
 function convert (text) {
-	if (text != "") { 
+	//if (text != "") { 
 		text = text.toLowerCase();
 		var imperial = grab_imperial(text);
-		if (imperial != -1) {
+		while (imperial != -1) {
 
 			var metric = replace_unit(imperial);
-			var impIndex  = text.search(imperial);
-			var front = text.substring(0, impIndex);
-			var back = text.substring(impIndex+imperial.length+1,text.length);
+			text = text.replace(imperial,metric);
 		
-			front = convert(front);
-			back = convert(back);
-			text = front + metric + back;
+			//front = convert(front);
+			//back = convert(back);
+			//text = front + metric + back;
 			
 			console.log("***** UNIT REPlACED ***** \"" + imperial + "\" \"" + metric + "\"");
 			imperial = grab_imperial(text);
 		}
-	} 
+	//} 
 	console.log("***** FINISHED CONVERTING *****");
 	return text;
 }
@@ -134,7 +132,7 @@ function grab_imperial (text) {
 	var place_unit = next_unit_index(text);
 	var number = -1;
 	var unit = "";
-	if (place_unit[0] != -1 ) {
+	if (place_unit[0] != -1) {
 		number = grab_number(text, place_unit[0]);
 		unit = conversion_list[place_unit[1]][0];
 	}
