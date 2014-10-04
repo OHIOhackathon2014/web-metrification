@@ -94,7 +94,8 @@ return "<hover original='" + number + " " + unit + "' onmouseover='AddOriginalMe
 
 /////////////////////////////////////////////Steve's convert
 function convert (text) {
-	console.log("64");
+//	console.log("64");
+	text = text.toLowerCase();
 	var imperial = grab_imperial(text);
 	while (imperial != -1) { 
 		var metric = replace_unit(imperial);
@@ -109,7 +110,7 @@ function grab_imperial (text) {
 	var place_unit = next_unit_index(text);
 	var number = -1;
 	var unit = "";
-	console.log("80");
+//	console.log("80");
 	if (place_unit[0] != -1 ) {
 		number = grab_number(text, place_unit[0]);
 		unit = conversion_list[place_unit[1]][0];
@@ -122,7 +123,7 @@ function next_unit_index (text) {
 	var place_unit = new Array(2); // [0] = location of unit in text; [1] = unit that was found
 	place_unit[0] = -1;
 	place_unit[1] = 0;
-	console.log("93");
+//	console.log("93");
 	while (place_unit[0] == -1 && place_unit[1] < conversion_list.length) {
 		place_unit[0] = text.search(conversion_list[place_unit[1]][0]);//
 		place_unit[1]++;
@@ -141,6 +142,7 @@ function grab_number (text, start) {
 	console.log("105");
 	while (start > 0) {
 		start--;
+	console.log(text[start].match(add) != null);
 		if(text[start].match(add) != null) {
 			value = text[start] + value;
 		} else if (text[start].match(skip) != null) {
@@ -160,30 +162,26 @@ try{
 	var element;
 	var length = array.length;
 	var i;
-	console.log("checkpoint 2: before first loop");
+//	console.log("checkpoint 2: before first loop");
 	for(i=0; i<length;i++){
     		element = array[i];
     		var node =  element.childNodes[0];
-		console.log("checkpoint 3: before subloop");
+//		console.log("checkpoint 3: before subloop");
    		while(node != null){
 			if(node.nodeType == 3){
-				console.log("checkpoint 3.5: In if statement of subloop");
+//				console.log("checkpoint 3.5: In if statement of subloop");
            			EntirePage += node.textContent; node.textContent = convert(node.textContent);
 			}
-		console.log("Checkpoint 4: Ending of inner loop");
+//		console.log("Checkpoint 4: Ending of inner loop");
 		node = node.nextSibling;
 		}
 	console.log("checkpoint 5: inbetween loops");
 	}
 console.log("checkpoint 6: exiting loop hell");
+
 }
 catch(err){
 	console.log("EROR");
-	var oNewP = document.createElement("p");
-	var oText = document.createTextNode(err.message);
-	oNewP.appendChild(oText);
-	oNewP.style.fontSize = "xx-large";
-	document.body.appendChild(oNewP);
 }
 
 var NewP = document.createElement("p");
