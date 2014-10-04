@@ -151,7 +151,8 @@ function next_unit_index (text) {
 	place_unit[1] = 0;
 //	console.log("93");
 	while (place_unit[0] == -1 && place_unit[1] < conversion_list.length) {
-		place_unit[0] = text.search(conversion_list[place_unit[1]][0]);//
+		place_unit[0] = text.search(conversion_list[place_unit[1]][0]);
+		//if(is_in_hover(text,place_unit[0],conversion_list[place_unit[1]][0])) {place_unit[0]=-1;}
 		place_unit[1]++;
 		
 	}
