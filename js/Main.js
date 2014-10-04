@@ -32,15 +32,14 @@ var conversion_list = [["inch","m",0.0254],
 					   ["mph","kph",1.609]
 					   ];
  
-function replace_unit(String s) {
+function replace_unit(s) {
   //TODO format string
-  
-  double number = 0;
-  String unit;
-  double m_number = 0;
-  string m_unit;
-  
-for(int i=0;i<s.length();i++) {
+  var number = 0.0;
+  var unit;
+  var m_number = 0.0;
+  var m_unit;
+
+for(var i=0;i<s.length;i++) {
     if(39>=s.charCodeAt(i) && s.charCodeAt(i)>=30) {
 //TODO add decimal support	
       unit*=10;
@@ -49,19 +48,20 @@ for(int i=0;i<s.length();i++) {
 	//TODO add in punct/wht spc checking
       unit.append(s.charAt(i));
     }
-	}
-  for(int i=0;i<conversion_table.length();i++) {
-    if(conversion_table.[i][0].equals(unit)) {
-	  m_unit = conversion_table.[i][1];
-	  m_number = number * conversion_table.[i][2];
-	  i = conversion_table.length();
+}
+	for(var j=0;j<conversion_list.length;i++) {
+    if(conversion_list[j][0].equals(unit)) {
+	  m_unit = conversion_list[j][1];
+	  m_number = number * conversion_list[j][2];
+	  i = conversion_list.length;
     }
   }
-
+  
 // unit fixing
 
-return "<hover original=" + number + " " + unit + ">" + m_number + " " + m_unit + "</hover>"
+return "<hover original='" + number + " " + unit + "' onmouseover='AddOriginalMeasurement(this)' onmouseout='RemoveOriginalMeasurement(this)'>" + m_number + " " + m_unit + "</hover>"
 }
+
 
 /////////////////////////////////////////////Steve's convert
 function convert (text) {
@@ -75,17 +75,28 @@ function convert (text) {
 	} while (imperial != -1);
 }
 
+function grab_imperial (text) {
+	var place_unit = next_imperial(text);
+	var number = -1;
+	var unit = "";
+	if (place_unit[0] != -1 ) {
+		number = grab_number(text, place_unit[0]);
+		unit = conversion_list[place_unit[1]][0];
+	}
+	return number+unit;
+}
+
 function next_imperial (text) {
 	var place_unit = new Array(2); // [0] = location of unit in text; [1] = unit that was found
 	place_unit[0] = -1;
 	place_unit[1] = 0;
 	do {
-		place_unit[0] = text.search(conversion_table[place_unit[1]][0]);
-	} (while place_unit[0] == -1 && place_unit[1] < conversion_table.length);
+		place_unit[0] = text.search(conversion_list[place_unit[1]][0]);//
+		
+	} while (place_unit[0] == -1 && place_unit[1] < conversion_list.length);
 	
 	return place_unit;
 }
-
 
 function grab_number (text, start) {
 	var value = "";
@@ -101,16 +112,6 @@ function grab_number (text, start) {
 	return value;
 }
 
-function grab_imperial (text) {
-	var place_unit = next_imperial(text,start);
-	var number = -1;
-	var unit = "";
-	if (place_unit[0] != -1 ) {
-		number = grab_number(text, place_unit[0]);
-		unit = conversion_table[place_unit[1]][0];
-	}
-	return number+unit;
-}
 
 //Run main html parser
 var EntirePage = "";
@@ -122,7 +123,7 @@ for(var i=0; i<length;i++){
 element = array[i];
 var node =  element.childNodes[0];
 while(node != null){
-if(node.nodeType == 3){EntirePage += node.textContent; /*node.textContent = convert(node.textContent);*/}
+if(node.nodeType == 3){EntirePage += node.textContent; node.textContent = convert(node.textContent);}
 node = node.nextSibling;
 }
 }
@@ -140,3 +141,6 @@ var NewP = document.createElement("p");
 var Text = document.createTextNode(EntirePage);
 NewP.appendChild(Text);
 document.body.appendChild(NewP);
+
+
+
