@@ -128,6 +128,10 @@ function convert (text) {
 	return text;
 }
 
+function is_in_hover(text,index,imperial) {
+return (test.length>index+imperial.length) && (index>10) && (index+imperial.length!="\'") && (index-10,index != "original=\'");
+}
+
 function grab_imperial (text) {
 	var place_unit = next_unit_index(text);
 	var number = -1;
