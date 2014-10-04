@@ -168,17 +168,29 @@ try{
 //	console.log("checkpoint 2: before first loop");
 	for(i=0; i<length;i++){
     		element = array[i];
-    		var node =  element.childNodes[0];
+		for (var node in element.childNodes) {
+			if (node != null ) {
+				if(node.nodeType == 3){
+//					console.log("checkpoint 3.5: In if statement of subloop");
+	           			EntirePage += node.textContent;
+					node.textContent = convert(node.textContent);
+				}
+			}
+		}
+
+
+		/* var node =  element.childNodes[0];
 //		console.log("checkpoint 3: before subloop");
    		while(node != null){
 			if(node.nodeType == 3){
 //				console.log("checkpoint 3.5: In if statement of subloop");
-           			EntirePage += node.textContent; node.textContent = convert(node.textContent);
+           			EntirePage += node.textContent;
+				node.textContent = convert(node.textContent);
 			}
-//		console.log("Checkpoint 4: Ending of inner loop");
+		console.log("Checkpoint 4: Ending of inner loop");
 		node = node.nextSibling;
-		}
-	console.log("checkpoint 5: inbetween loops");
+		}*/
+//	console.log("checkpoint 5: inbetween loops");
 	}
 console.log("checkpoint 6: exiting loop hell");
 
