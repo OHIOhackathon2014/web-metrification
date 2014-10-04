@@ -32,7 +32,7 @@ var conversion_list = [
 function replace_unit(s) {
   //TODO format string
   var number = 0.0, unit = "", m_number = 0.0, m_unit = "", i = 0, j = 0;
-console.log("37");
+chrome.extention.getBackgroundPage().console.log("37");
 for(i=0; i<s.length; i++) {
     if(39>=s.charCodeAt(i) && s.charCodeAt(i)>=30) {
          //TODO add decimal support	
@@ -43,7 +43,7 @@ for(i=0; i<s.length; i++) {
 	//TODO add in punct/wht spc checking
       unit.append(s.charAt(i));
     }
-    console.log("checkpoint 1: done finding decimal number");
+    chrome.extention.getBackgroundPage().console.log("checkpoint 1: done finding decimal number");
 }
 	for(j=0; j<conversion_list.length; j++) {
     if(conversion_list[j][0].equals(unit)) {
@@ -62,7 +62,7 @@ return "<hover original='" + number + " " + unit + "' onmouseover='AddOriginalMe
 
 /////////////////////////////////////////////Steve's convert
 function convert (text) {
-	console.log("64");
+	chrome.extention.getBackgroundPage().console.log("64");
 	var index = 0; // unused
 	var imperial = grab_imperial(text); // i moved this
 	do { //****
@@ -73,19 +73,19 @@ function convert (text) {
 		}
 		imperial = grab_imperial(text); //  i did this
 	} while (imperial != -1);
-console.log("73");
+chrome.extention.getBackgroundPage().console.log("73");
 	}
 
 function grab_imperial (text) {
 	var place_unit = next_imperial(text);
 	var number = -1;
 	var unit = "";
-	console.log("80");
+	chrome.extention.getBackgroundPage().console.log("80");
 	if (place_unit[0] != -1 ) {
 		number = grab_number(text, place_unit[0]);
 		unit = conversion_list[place_unit[1]][0];
 	}
-	console.log("85");
+	chrome.extention.getBackgroundPage().console.log("85");
 	return number+unit;
 }
 
@@ -93,12 +93,12 @@ function next_imperial (text) {
 	var place_unit = new Array(2); // [0] = location of unit in text; [1] = unit that was found
 	place_unit[0] = -1;
 	place_unit[1] = 0;
-	console.log("93");
+	chrome.extention.getBackgroundPage().console.log("93");
 	do {
 		place_unit[0] = text.search(conversion_list[place_unit[1]][0]);//
 		
 	} while (place_unit[0] == -1 && place_unit[1] < conversion_list.length);
-	console.log("98");
+	chrome.extention.getBackgroundPage().console.log("98");
 	return place_unit;
 }
 
@@ -107,7 +107,7 @@ function grab_number (text, start) {
 	var skip = /[a-zA-Z]/;
 	var value = "";
 	text = text.split('');
-	console.log("105");
+	chrome.extention.getBackgroundPage().console.log("105");
 	while (start > 0) {
 		start--;
 		if(text[start].match(add) != null) {
@@ -116,38 +116,38 @@ function grab_number (text, start) {
 			start = -1; //exit loop
 		}
 	}
-	console.log("114");
+	chrome.extention.getBackgroundPage().console.log("114");
 	return value;
 }
 
 
 //Run main html parser
 var EntirePage = "";
-console.log("Checkpoint 1: Started");
+chrome.extention.getBackgroundPage().console.log("Checkpoint 1: Started");
 try{
 	var array = document.body.getElementsByTagName("*");
 	var element;
 	var length = array.length;
 	var i;
-	console.log("checkpoint 2: before first loop");
+	chrome.extention.getBackgroundPage().console.log("checkpoint 2: before first loop");
 	for(i=0; i<length;i++){
     		element = array[i];
     		var node =  element.childNodes[0];
-		console.log("checkpoint 3: before subloop");
+		chrome.extention.getBackgroundPage().console.log("checkpoint 3: before subloop");
    		while(node != null){
 			if(node.nodeType == 3){
-				console.log("checkpoint 3.5: In if statement of subloop");
+				chrome.extention.getBackgroundPage().console.log("checkpoint 3.5: In if statement of subloop");
            			EntirePage += node.textContent; node.textContent = convert(node.textContent);
 			}
-		console.log("Checkpoint 4: Ending of inner loop");
+		chrome.extention.getBackgroundPage().console.log("Checkpoint 4: Ending of inner loop");
 		node = node.nextSibling;
 		}
-	console.log("checkpoint 5: inbetween loops");
+	chrome.extention.getBackgroundPage().console.log("checkpoint 5: inbetween loops");
 	}
-console.log("checkpoint 6: exiting loop hell");
+chrome.extention.getBackgroundPage().console.log("checkpoint 6: exiting loop hell");
 }
 catch(err){
-	console.log("EROR");
+	chrome.extention.getBackgroundPage().console.log("EROR");
 	var oNewP = document.createElement("p");
 	var oText = document.createTextNode(err.message);
 	oNewP.appendChild(oText);
@@ -159,6 +159,6 @@ var NewP = document.createElement("p");
 var Text = document.createTextNode(EntirePage);
 NewP.appendChild(Text);
 document.body.appendChild(NewP);
-console.log("checkpoint 7: Exiting");
+chrome.extention.getBackgroundPage().console.log("checkpoint 7: Exiting");
 
 
