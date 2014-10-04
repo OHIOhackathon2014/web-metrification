@@ -35,10 +35,10 @@ var conversion_list = [["inch","m",0.0254],
 function replace_unit(String s) {
   //TODO format string
   
-  double number = 0;
-  String unit;
-  double m_number = 0;
-  string m_unit;
+  var number = 0.0;
+  var unit;
+  var m_number = 0.0;
+  var m_unit;
   
 for(int i=0;i<s.length();i++) {
     if(39>=s.charCodeAt(i) && s.charCodeAt(i)>=30) {
