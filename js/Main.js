@@ -66,21 +66,22 @@ for(i=0; i<s.length; i++) {
 }
 
 	for(j=0; j<conversion_list.length; j++) {
-    if(conversion_list[j][0]==(unit)) {
-	  m_unit = conversion_list[j][1];
-	  m_number = number * conversion_list[j][2];
-	  j = conversion_list.length;
+ 	   if(conversion_list[j][0]==unit) {
+		  m_unit = conversion_list[j][1];
+		  m_number = number * conversion_list[j][2];
+		  j = conversion_list.length;
     }
   }
  console.log("66");
   if(unit == "°f" || unit=="fahrenheit"){return replace_temp_unit(s);}
 // unit fixing
 if(is_negative){m_number*=-1;}
-return "<hover original='" + number + " " + unit + "' onmouseover='AddOriginalMeasurement(this)' onmouseout='RemoveOriginalMeasurement(this)'>" + m_number + " " + m_unit + "</hover>";
+return "<hover original='" + " " + "' onmouseover='AddOriginalMeasurement(this)' onmouseout='RemoveOriginalMeasurement(this)'>" + m_number + " " + m_unit + "</hover>";
+//return "<hover original='" + number + " " + unit + "' onmouseover='AddOriginalMeasurement(this)' onmouseout='RemoveOriginalMeasurement(this)'>" + m_number + " " + m_unit + "</hover>";
 }
 
 function replace_temp_unit(s) {
-var number = 0.0, unit = "", m_number = 0.0, m_unit = ""
+var number = 0.0, unit = "", m_number = 0.0, m_unit = "";
 for(i=0; i<s.length; i++) {
     if(57>=s.charCodeAt(i) && s.charCodeAt(i)>=48) {
 //TODO add decimal support	
@@ -97,49 +98,52 @@ for(i=0; i<s.length; i++) {
     }
 	}
 	if(unit == "°f" || unit=="fahrenheit") {
-	m_unit = "°c"
+	m_unit = "°c";
 	m_number = (number-32)*(5.0/9.0);
 	} else {
 	return "";
 	}
 	
-return "<hover original='" + number + " " + unit + "' onmouseover='AddOriginalMeasurement(this)' onmouseout='RemoveOriginalMeasurement(this)'>" + m_number + " " + m_unit + "</hover>";
+return "<hover original='" + " " + "' onmouseover='AddOriginalMeasurement(this)' onmouseout='RemoveOriginalMeasurement(this)'>" + m_number + " " + m_unit + "</hover>";
+//return "<hover original='" + number + " " + unit + "' onmouseover='AddOriginalMeasurement(this)' onmouseout='RemoveOriginalMeasurement(this)'>" + m_number + " " + m_unit + "</hover>";
 }
 
 /////////////////////////////////////////////Steve's convert
 function convert (text) {
-	if (text != "") { 
+	//if (text != "") { 
 		text = text.toLowerCase();
 		var imperial = grab_imperial(text);
-		if (imperial != -1) {
+		while (imperial != -1) {
 
 			var metric = replace_unit(imperial);
-			var impIndex  = text.search(imperial);
-			var front = text.substring(0, impIndex);
-			var back = text.substring(impIndex+imperial.length+1,text.length);
+			text = text.replace(imperial,metric);
 		
-			front = convert(front);
-			back = convert(back);
-			text = front + metric + back;
+			//front = convert(front);
+			//back = convert(back);
+			//text = front + metric + back;
 			
 			console.log("***** UNIT REPlACED ***** \"" + imperial + "\" \"" + metric + "\"");
 			imperial = grab_imperial(text);
 		}
-	} 
+	//} 
 	console.log("***** FINISHED CONVERTING *****");
 	return text;
+}
+
+function is_in_hover(text,index,imperial) {
+return (test.length>index+imperial.length) && (index>10) && (index+imperial.length!="\'") && (index-10,index != "original=\'");
 }
 
 function grab_imperial (text) {
 	var place_unit = next_unit_index(text);
 	var number = -1;
 	var unit = "";
-	if (place_unit[0] != -1 ) {
+	if (place_unit[0] != -1) {
 		number = grab_number(text, place_unit[0]);
 		unit = conversion_list[place_unit[1]][0];
 	}
 	console.log("grab_imperial number+unit: " + number + unit);
-	return "" + number + unit;
+	return number + unit;
 }
 
 function next_unit_index (text) {
@@ -149,12 +153,13 @@ function next_unit_index (text) {
 	place_unit[1] = 0;
 //	console.log("93");
 	while (place_unit[0] == -1 && place_unit[1] < conversion_list.length) {
-		place_unit[0] = text.search(conversion_list[place_unit[1]][0]);//
+		place_unit[0] = text.search(conversion_list[place_unit[1]][0]);
+		//if(is_in_hover(text,place_unit[0],conversion_list[place_unit[1]][0])) {place_unit[0]=-1;}
 		place_unit[1]++;
 		
 	}
 	place_unit[1]--;
-	console.log(place_unit[1] + " " + place_unit[0])
+	console.log(place_unit[1] + " " + place_unit[0]);
 	console.log("next_unit_index place_unit: " + place_unit);
 	return place_unit;
 }
