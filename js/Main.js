@@ -58,12 +58,38 @@ for(i=0; i<s.length; i++) {
 	  j = conversion_list.length;
     }
   }
-  
+  if(unit == "°f" || unit=="fahrenheit"){return replace_temp_unit(s);}
 // unit fixing
 
 return "<hover original='" + number + " " + unit + "' onmouseover='AddOriginalMeasurement(this)' onmouseout='RemoveOriginalMeasurement(this)'>" + m_number + " " + m_unit + "</hover>";
 }
 
+function replace_temp_unit(s) {
+var number = 0.0, unit = "", m_number = 0.0, m_unit = ""
+for(i=0; i<s.length; i++) {
+    if(57>=s.charCodeAt(i) && s.charCodeAt(i)>=48) {
+//TODO add decimal support	
+      number*=10.0;
+      number+=s.charCodeAt(i)-48; // convert to int
+    } else if(s.charCodeAt(i)==46) {
+	  i_start = i;
+	  while(++i<s.length && 57>=s.charCodeAt(i) && s.charCodeAt(i)>=48) {
+	    number+=(Math.pow(0.1,i-i_start))*(s.charCodeAt(i)-48);
+	  }
+	} else {
+	//TODO add in punct/wht spc checking
+      unit.append(s.charAt(i));
+    }
+	}
+	if(unit == "°f" || unit=="fahrenheit") {
+	m_unit = "°c"
+	m_number = (number-32)*(5.0/9.0);
+	} else {
+	return "";
+	}
+	
+return "<hover original='" + number + " " + unit + "' onmouseover='AddOriginalMeasurement(this)' onmouseout='RemoveOriginalMeasurement(this)'>" + m_number + " " + m_unit + "</hover>";
+}
 
 /////////////////////////////////////////////Steve's convert
 function convert (text) {
