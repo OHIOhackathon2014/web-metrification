@@ -31,6 +31,7 @@ var conversion_list = [
  
 function replace_unit(s) {
   //TODO format string
+  s = s.trim();
   var number = 0.0, unit = "", m_number = 0.0, m_unit = "", i = 0,i_start = 0, j = 0;
 console.log("37");
 for(i=0; i<s.length; i++) {
