@@ -2,42 +2,109 @@
 	<head>
 		<script>
 			var conversion_list = [
-       			 length: 
-			 [
-       			 	{"inches","meters",convert: function(x) = {0.0254*x;}},	
-       			 	{"feet","meters",convert: function(x) = {0.3048*x;}},	
-       			 	{"yards","meters",convert: function(x) = {0.9144*x;}},
-			 	{"miles","meters",convert: function(x) = {1609.34*x;}}
-			 ],
-       			 volume: 
-			 [
-			 	{"teaspoons","liters",convert: function(x) = {0.004929*x;}},
-       			 	{"tablespoons","liters",convert: function(x) = {0.01479*x;}},
-       		       	 	{"fluid ounces","liters",convert: function(x) = {0.02957*x;}},
-       			 	{"cups","liters",convert: function(x) = {0.2366*x;}},
-       			 	{"pints","liters",convert: function(x) = {0.4732*x;}},
-       			 	{"quarts","liters",convert: function(x) = {0.9464*x;}},
-       			 	{"gallons","liters",convert: function(x) = {3.785*x;}}
-			 ],
-       			 weight: 
-			 [
-			 	{"ounces","grams",convert: function(x) = {28.35*x;}},
-       			 	{"pounds","grams",convert: function(x) = {453.6*x;}},
-       			 	{"tons","grams",convert: function(x) = {907185*x;}}
-			 ],
-       			 temperature: 
-			 [
-			 	{"fahrenheit","°c",convert: function(x) = {(x-32)*(5.0/9);}},
-       		         ],
-       			 speed: 
-			 [
- 			 	{"mph","kph",convert: function(x) = {1.609x;}}]
+       				 length: 
+				 [
+       				 	{imp: "inches",si: "meters",convert: function(x) = {0.0254*x;}},	
+       				 	{imp: "feet",si: "meters",convert: function(x) = {0.3048*x;}},	
+       				 	{imp: "yards",si: "meters",convert: function(x) = {0.9144*x;}},
+				 	{imp: "miles",si: "meters",convert: function(x) = {1609.34*x;}}
+				 ],
+       				 volume: 
+				 [
+				 	{imp: "teaspoons",si: "liters",convert: function(x) = {0.004929*x;}},
+       				 	{imp: "tablespoons",si: "liters",convert: function(x) = {0.01479*x;}},
+       		       		 	{imp: "fluid ounces",si: "liters",convert: function(x) = {0.02957*x;}},
+       				 	{imp: "cups",si: "liters",convert: function(x) = {0.2366*x;}},
+       				 	{imp: "pints",si: "liters",convert: function(x) = {0.4732*x;}},
+       				 	{imp: "quarts",si: "liters",convert: function(x) = {0.9464*x;}},
+       				 	{imp: "gallons",si: "liters",convert: function(x) = {3.785*x;}}
+				 ],
+       				 weight: 
+				 [
+				 	{imp: "ounces",si: "grams",convert: function(x) = {28.35*x;}},
+       				 	{imp: "pounds",si: "grams",convert: function(x) = {453.6*x;}},
+       				 	{imp: "tons",si: "grams",convert: function(x) = {907185*x;}}
+				 ],
+       				 temperature: 
+				 [
+				 	{imp: "fahrenheit",si: "°c",convert: function(x) = {(x-32)*(5.0/9);}},
+       		        	 ],
+       				 speed: 
+				 [
+ 				 	{imp: "mph",si: "kph",convert: function(x) = {1.609*x;}}
+				 ]
        		         ];
 		</script>
 
 		<script>
+
+			//Reset everything! 2 textboxes, three selectors
+			function ResetValues() {
+				var a = document.getElementById("categories");
+				a.value = "All";
+				document.getElementById("input").value="";
+				document.getElementById("output").value="";
+				var imperial = document.getElementById("imperialContainer");
+				var metric = document.getElementById("metricContainer");
+				imperial.innerHTML = ""; metric.innerHTML = "";
+				for(var i=0; len = conversion_list.length; i<len; i++)
+				{
+					var metricEntry = document.createElement("option");
+					var val = conversion_list[i][0].si;
+					metricEntry.value = val; metricEntry.text = val;
+					metric.add(metricEntry);
+					for(var t=0; lem = conversion_list[i].length; t<len; t++)
+					{
+						var temp = document.createElement("option");
+						var val = conversion_list[i][t].imp;
+						temp.value = val; temp.text = val;
+						imperial.add(val);
+					}
+				}
+			}
+
 			function updateContainers() {
-				
+				var empire = document.getElementById("imperialContainer");
+				var meter = document.getElementById("metricContainer");
+				var cats = document.getElementById("categories");
+				if(cats.value=="All")
+				{
+					resetValues();
+				}
+				else 
+				{
+					empire.innerHTML = "";
+					meter.innerHTML = "";
+					for(var i = 0; len = conversion_list[cats.value]; i<len; i++)
+					{
+						var temp = document.createElement("option");
+						var val = conversion_list[cats.value][i].imp;
+						temp.value = val; temp.text = val;
+						empire.add(val);
+					}
+					var temp = document.createElement("option");
+					var val = conversion_list[cats.value][0].imp;
+					temp.value = val; temp.text = val;
+					meter.add(val);
+				}
+			}
+
+			function updateFromInput()
+			{
+				var empire = document.getElementById("imperialContainer");
+				var meter = document.getElementById("metricContainer");
+				var value = empire.value;
+				for(var i = 0; len = conversion_list.length; i<len; i++)
+					{
+						for(var t =0; lent = conversion_list[i].length; i<lent; i++)
+						{
+							if(conversion_list[i][t][imp]===value)
+							{
+								meter.value = conversion_list[i][t][si];
+								return;
+							}
+						}
+					}
 			}
 		</script>
 
@@ -47,11 +114,18 @@
 		
 		<input type="text" id="input" > </input> <input type="text" id="output" readonly> </input>
 		<select id="categories" onchange="updateContainers()">
+			<option value="All">--</option>
+			<option value="length">Length</option>
+			<option value="volume">Volume</option>
+			<option value="weight">Weight</option>
+			<option value="temperature">temperature</option>
+			<option value="speed">speed</option>
+			 
 		</select> 
 		<select id="imperialContainer" onchange="updateFromInput()">
 			
 		</select>
-		<select id="metricContainer" onchange="updateFromOutput()">
+		<select id="metricContainer">
 
 		</select>
 	</body>
