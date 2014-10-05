@@ -8,7 +8,7 @@ var conversion_list = [
 	[" yard","m",0.9144],
 	[" yd","m",0.9144],
 	[" mile","m",1609.34],
-	[" mi\.","m",1609.34],
+	[" mi","m",1609.34],
 	[" teaspoon","l",0.004929],
 	[" tsp","l",0.004929],
 	[" tablespoon","l",0.01479],
@@ -80,31 +80,33 @@ function replace_unit(s){
 	var metricNum;
 	var metricUnit;
 
-	for (var i = 0; i < 0; i++) {
+	for (var i = 0; i < conversion_list.length; i++) {
 		if (conversion_list[i][0] == impUnit) {
 			metricUnit = conversion_list[i][1];
 			metricNum = impNum * conversion_list[i][2];
 			break;
 		}
 	}
-	return ;
-	return "<hover original='" + impNum + " " + impUnit + "' onmouseover='AddOriginalMeasurement(this)' onmouseout='RemoveOriginalMeasurement(this)'>" + adjust_unit(metricNum, metricUnit) + "</hover>";
+	return "<hover color=\"red\" original='" + impNum + " " + impUnit + "' onmouseover='AddOriginalMeasurement(this)' onmouseout='RemoveOriginalMeasurement(this)'>" + adjust_unit(metricNum, metricUnit) + "</hover>";
 }
 
 function convert(text) {
 	var impArray = imperial_array(text);
 	if (impArray!=null) {
 		var metricArray = metric_array(impArray);
+		console.log("98: " + metricArray);
 		console.log("95: " + impArray);
 		for (var i = 0; i < impArray.length; i++) {
 			text = text.replace(impArray[i], metricArray[i]);
+			console.log("101: imp array : " + impArray[i]);
+			console.log("102: met array : " + metricArray[i]);
 		}
 	}
 	return text;
 }
 
 function imperial_array (text) {
-	var regex = /\s[0-9]+[.]?[0-9]*\s(inch|inches|in|foot|feet|ft|yard|yd|mile|mi|teaspoon|tsp|tablespoon|tbsp|fluid\sounce|fl\soz|cup|pint|quart|gallon|ounce|oz|pound|lb|ton|fahrenheit|°f|mph)[.]?[^a-zA-Z0-9]/i;
+	var regex = /[0-9]+[.]?[0-9]*\s(inch|inches|in|foot|feet|ft|yard|yd|mile|mi|teaspoon|tsp|tablespoon|tbsp|fluid\sounce|fl\soz|cup|pint|quart|gallon|ounce|oz|pound|lb|ton|fahrenheit|°f|mph)[.]?[^a-zA-Z0-9]/i;
 	return text.match(regex);
 }
 
@@ -128,7 +130,7 @@ try{
     		element = array[i];
 			var node =  element.childNodes[0];
 			while(node != null){
-				if(node.nodeType == 3){
+				if(node.nodeType == 3){ //Node type 3 is text
 					//console.log("Checking node");
 					node.textContent = convert(node.textContent);
 				}
