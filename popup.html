@@ -49,7 +49,7 @@
 				console.log("checkpoint 3");
 				console.log(Object.keys(conversion_list).length);
 				var len = Object.keys(conversion_list).length;
-				for(var i=0; i<len; i++)
+				/*for(var i=0; i<len; i++)
 				{
 					console.log("checkpoint 4");
 					var metricEntry = document.createElement("option");
@@ -70,9 +70,30 @@
 						imperial.add(val);
 					}
 					console.log("checkpoint 6");
+				}*/
+				for(var key in conversion_list)
+				{
+					var metricEntry = document.createElement("option");
+					console.log(conversion_list[key]);
+					var val = conversion_list[key][0].si;
+					console.log("Cechkpoint 4 NEW");
+					metricEntry.value = val; metricEntry.text = val;
+					metric.add(metricEntry);
+					var temp = document.createElement("option");
+					var val = conversion_list[key];
+					for(var i=0; i< val.length; i++)
+					{
+						var vale = conversion_list[key][i].imp;
+						var impEntry = document.createElement("option");
+						impEntry.value = vale; impEntry.text = vale;
+						imperial.add(impEntry);
+					}
 				}
 				console.log("checkpoint 7");
+				console.log(metric);
+				console.log(imperial);
 			}
+
 
 			function updateContainers() {
 				var empire = document.getElementById("imperialContainer");
