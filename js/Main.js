@@ -50,6 +50,8 @@ function adjust_unit(m_number, m_unit) {
 	var offsets = ["","k","M","G","T","P","E","Z","Y"];
 	var neg_offsets = ["","m","µ","n","p","f","a","z","y"];
 	var m_adj_unit;
+	console.log("m_number: " + m_number);
+	console.log("m_unit: " + m_unit);
 	
 	if(m_unit == "°c") {
 		m_number = (m_number-32)*(5.0/9.0);
@@ -70,20 +72,46 @@ function adjust_unit(m_number, m_unit) {
 			m_adj_unit = neg_offsets[m_unit_shift] + m_unit;
 		}
 	}
+	
+	console.log("m_number: " + m_number);
+	console.log("m_adj_unit: " + m_adj_unit);
+	
 	return m_number + " " + m_adj_unit;
 }
 
 function replace_unit(s){
+    //console.log("s: " + s);
 	s = s.trim();
-	var impNum = Number(s.substring(0, s.search("/s")));
-	var impUnit = s.substring(s.search("/s")).trim();
+	var divisor=0;
+	//console.log("s: after trim" + s);
+	while(s.charCodeAt(divisor)<=57) { // find the split between the number and unit
+	divisor++;
+	}
+	//console.log("divisor: " + divisor);
+	//console.log("impNum: before " + s.substring(0,divisor));
+	//console.log("impUnit before: " + s.substring(divisor));
+	
+	var impNum = Number(s.substring(0,divisor));
+	var impUnit = s.substring(divisor);
+	
+	if(typeof(impNum)=="undefined" || impNum.length==0 || s.substring(0,divisor).length==0) {
+	impNum = 1;
+	}
+	
+	//console.log("impNum: " + impNum);
+	//console.log("impUnit: " + impUnit);
+	
+	
+	
 	var metricNum;
 	var metricUnit;
 
 	for (var i = 0; i < conversion_list.length; i++) {
-		if (conversion_list[i][0] == impUnit) {
+		if (conversion_list[i][0] == " " + impUnit) {
 			metricUnit = conversion_list[i][1];
 			metricNum = impNum * conversion_list[i][2];
+			//console.log("metricUnit: " + metricUnit);
+	        //console.log("metricNum: " + metricNum);
 			break;
 		}
 	}
