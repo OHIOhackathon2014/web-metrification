@@ -38,27 +38,39 @@
 			//Reset everything! 2 textboxes, three selectors
 			function ResetValues() {
 				var a = document.getElementById("categories");
+			console.log("A Got the categories");
 				a.value = "All";
 				document.getElementById("input").value="";
 				document.getElementById("output").value="";
+			console.log("B Got the input and output");
 				var imperial = document.getElementById("imperialContainer");
 				var metric = document.getElementById("metricContainer");
+			console.log("C Got the imperial values and metrics");
 				imperial.innerHTML = ""; metric.innerHTML = "";
+			console.log("D cleared imperial and metric to "imperial.innerHTML+"& "+metric.innerHTML);
 				var len = Object.keys(conversion_list).length;
+			console.log("E First interaction with conversion_list Length is "+len);
 				for(var key in conversion_list)
 				{
+			console.log("f Entering into conversion_list first level");
 					var metricEntry = document.createElement("option");
 					var val = conversion_list[key][0].si;
+			console.log("g Just got a metric unit of "+val);
 					metricEntry.value = val; metricEntry.text = val;
 					metric.add(metricEntry);
+			console.log("h Just added the metric value to the drop downs");
 					var temp = document.createElement("option");
 					var val = conversion_list[key];
+			console.log("i Just grabbed the first array");
 					for(var i=0; i< val.length; i++)
 					{
+			console.log("j Just entered a loop");
 						var vale = conversion_list[key][i].imp;
+			console.log("k Grabbed a English unit");
 						var impEntry = document.createElement("option");
 						impEntry.value = vale; impEntry.text = vale;
 						imperial.add(impEntry);
+			console.log("l END, added the imperial unit");
 					}
 				}
 			}
