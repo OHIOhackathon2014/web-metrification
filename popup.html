@@ -4,100 +4,90 @@
 		<script>
 			var conversion_list = { 
 					length: [
-					{imp: "inches",si: "meters", convert: function(x) {0.0254*x;}},	
-       				 	{imp: "feet",si: "meters", convert: function(x) {0.3048*x;}},	
-       				 	{imp: "yards",si: "meters", convert: function(x) {0.9144*x;}},
-				 	{imp: "miles",si: "meters", convert: function(x) {1609.34*x;}}
+					{imp: "inches",si: "meters", convert: function(x) {return 0.0254*x;}},	
+       				 	{imp: "feet",si: "meters", convert: function(x) {return 0.3048*x;}},	
+       				 	{imp: "yards",si: "meters", convert: function(x) {return 0.9144*x;}},
+				 	{imp: "miles",si: "meters", convert: function(x) {return 1609.34*x;}}
 				 ],
        				 volume: 
 				 [
-				 	{imp: "teaspoons",si: "liters", convert: function(x) {0.004929*x;}},
-       				 	{imp: "tablespoons",si: "liters", convert: function(x) {0.01479*x;}},
-       		       		 	{imp: "fluid ounces",si: "liters", convert: function(x) {0.02957*x;}},
-       				 	{imp: "cups",si: "liters", convert: function(x) {0.2366*x;}},
-       				 	{imp: "pints",si: "liters", convert: function(x) {0.4732*x;}},
-       				 	{imp: "quarts",si: "liters", convert: function(x) {0.9464*x;}},
-       				 	{imp: "gallons",si: "liters", convert: function(x) {3.785*x;}}
+				 	{imp: "teaspoons",si: "liters", convert: function(x) {return 0.004929*x;}},
+       				 	{imp: "tablespoons",si: "liters", convert: function(x) {return 0.01479*x;}},
+       		       		 	{imp: "fluid ounces",si: "liters", convert: function(x) {return 0.02957*x;}},
+       				 	{imp: "cups",si: "liters", convert: function(x) {return 0.2366*x;}},
+       				 	{imp: "pints",si: "liters", convert: function(x) {return 0.4732*x;}},
+       				 	{imp: "quarts",si: "liters", convert: function(x) {return 0.9464*x;}},
+       				 	{imp: "gallons",si: "liters", convert: function(x) {return 3.785*x;}}
 				 ],
        				 weight: 
 				 [
-				 	{imp: "ounces",si: "grams", convert: function(x) {28.35*x;}},
-       				 	{imp: "pounds",si: "grams", convert: function(x) {453.6*x;}},
-       				 	{imp: "tons",si: "grams", convert: function(x) {907185*x;}}
+				 	{imp: "ounces",si: "grams", convert: function(x) {return 28.35*x;}},
+       				 	{imp: "pounds",si: "grams", convert: function(x) {return 453.6*x;}},
+       				 	{imp: "tons",si: "grams", convert: function(x) {return 907185*x;}}
 				 ],
        				 temperature: 
 				 [
-				 	{imp: "fahrenheit",si: "°c", convert: function(x) {(x-32)*(5.0/9);}}
+				 	{imp: "fahrenheit",si: "°c", convert: function(x) {return (x-32)*(5.0/9);}}
        		     ],
        				 speed: 
 				 [
- 				 	{imp: "mph",si: "kph", convert: function(x) {1.609*x;}}
+ 				 	{imp: "mph",si: "kph", convert: function(x) {return 1.609*x;}}
 				 ]
        		         };
 
 			//Reset everything! 2 textboxes, three selectors
 			function ResetValues() {
-				console.log("checkpoint 1");
 				var a = document.getElementById("categories");
 				a.value = "All";
 				document.getElementById("input").value="";
 				document.getElementById("output").value="";
-				console.log("checkpoint 2");
 				var imperial = document.getElementById("imperialContainer");
 				var metric = document.getElementById("metricContainer");
 				imperial.innerHTML = ""; metric.innerHTML = "";
-				console.log("checkpoint 3");
-				console.log(Object.keys(conversion_list).length);
 				var len = Object.keys(conversion_list).length;
-				for(var i=0; i<len; i++)
+				for(var key in conversion_list)
 				{
-					console.log("checkpoint 4");
 					var metricEntry = document.createElement("option");
-					var val = conversion_list[conversion_list.keys(i)][0].si;
-					console.log("what?!");
+					var val = conversion_list[key][0].si;
 					metricEntry.value = val; metricEntry.text = val;
-					console.log("hey");
 					metric.add(metricEntry);
-					//lem = conversion_list[i].length;
-					console.log(Object.keys(conversion_list[i]).length);
-					lem = Object.keys(conversion_list[i]).length;
-					for(var t=0; t<lem; t++)
+					var temp = document.createElement("option");
+					var val = conversion_list[key];
+					for(var i=0; i< val.length; i++)
 					{
-						console.log("checkpoint 5");
-						var temp = document.createElement("option");
-						var val = conversion_list[i][t].imp;
-						temp.value = val; temp.text = val;
-						imperial.add(val);
+						var vale = conversion_list[key][i].imp;
+						var impEntry = document.createElement("option");
+						impEntry.value = vale; impEntry.text = vale;
+						imperial.add(impEntry);
 					}
-					console.log("checkpoint 6");
 				}
-				console.log("checkpoint 7");
 			}
 
+			//If the container button is hit we adjust.
 			function updateContainers() {
 				var empire = document.getElementById("imperialContainer");
 				var meter = document.getElementById("metricContainer");
 				var cats = document.getElementById("categories");
 				if(cats.value=="All")
 				{
-					resetValues();
+					ResetValues();
 				}
 				else 
 				{
 					empire.innerHTML = "";
 					meter.innerHTML = "";
-					var len = conversion_list[cats.value]
+					var len = conversion_list[cats.value].length;
 					for(var i = 0; i<len; i++)
 					{
 						var temp = document.createElement("option");
 						var val = conversion_list[cats.value][i].imp;
 						temp.value = val; temp.text = val;
-						empire.add(val);
+						empire.add(temp);
 					}
 					var temp = document.createElement("option");
-					var val = conversion_list[cats.value][0].imp;
+					var val = conversion_list[cats.value][0].si;
 					temp.value = val; temp.text = val;
-					meter.add(val);
+					meter.add(temp);
 				}
 			}
 
@@ -107,14 +97,14 @@
 				var meter = document.getElementById("metricContainer");
 				var value = empire.value;
 				var  len = conversion_list.length;
-				for(var i = 0; i<len; i++)
+				for(var key in conversion_list)
 					{
-						var lent = conversion_list[i].length;
-						for(var t =0; i<lent; i++)
+						var lent = conversion_list[key].length;
+						for(var t =0; t<lent; t++)
 						{
-							if(conversion_list[i][t][imp]===value)
+							if(conversion_list[key][t].hasOwnProperty(value))
 							{
-								meter.value = conversion_list[i][t][si];
+								meter.value = conversion_list[key][t].si;
 								return;
 							}
 						}
@@ -126,17 +116,18 @@
 				var empire = document.getElementById("imperialContainer");
 				var empVal = empire.value;
 				var si = document.getElementById("output");
+				var input = document.getElementById("input");
 
 				var stringToInt = parseFloat(this.value);
 				var len = conversion_list.length;
-				for(var i = 0; i<len; i++)
+				for(var key in conversion_list)
 					{
-						var  lent = conversion_list[i].length;
-						for(var t =0; i<lent; i++)
+						var  lent = conversion_list[key].length;
+						for(var t =0; t<lent; t++)
 						{
-							if(conversion_list[i][t][imp]===value)
+							if(conversion_list[key][t].imp===empVal)
 							{
-								output.value = conversion_list[i][t].convert(empVal);
+								si.value = conversion_list[key][t].convert(input.value);
 								return;
 							}
 						}
@@ -164,10 +155,11 @@
 		<select id="imperialContainer" onchange="updateFromInput()">
 			
 		</select>
-		<select id="metricContainer">
+		<select id="metricContainer" >
 
 		</select>
 
-		<script>document.addEventListener('DOMContentLoaded',function(){ResetValues()});</script>
+		<script>document.addEventListener('DOMContentLoaded',function(){ResetValues()});
+		</script>
 	</body>
 </html>
