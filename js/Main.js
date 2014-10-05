@@ -87,22 +87,7 @@ function replace_unit(s){
 			break;
 		}
 	}
-	return "<hover color=\"red\" original='" + impNum + " " + impUnit + "' onmouseover='AddOriginalMeasurement(this)' onmouseout='RemoveOriginalMeasurement(this)'>" + adjust_unit(metricNum, metricUnit) + "</hover>";
-}
-
-function convert(text) {
-	var impArray = imperial_array(text);
-	if (impArray!=null) {
-		var metricArray = metric_array(impArray);
-		console.log("98: " + metricArray);
-		console.log("95: " + impArray);
-		for (var i = 0; i < impArray.length; i++) {
-			text = text.replace(impArray[i], metricArray[i]);
-			console.log("101: imp array : " + impArray[i]);
-			console.log("102: met array : " + metricArray[i]);
-		}
-	}
-	return text;
+	return "<b  style=\"color:green\"  onmouseover=\"AddOriginalMeasurement(this)\" onmouseout=\"RemoveOriginalMeasurement(this)\">" + adjust_unit(metricNum, metricUnit) + "</b>";
 }
 
 function imperial_array (text) {
@@ -111,34 +96,46 @@ function imperial_array (text) {
 }
 
 function metric_array (impArray){
-	console.log("105: " + impArray);
 	var metricArray =  new Array(impArray.length);
 	for (var i = 0; i < impArray.length; i++) {
 		metricArray[i] = replace_unit(impArray[i]);
 	}
+	
+	console.log("105: " + metricArray);
 	return metricArray;
 }
 
 //Run main html parser
 console.log("Started");
-try{
+
 	var array = document.body.getElementsByTagName("*");
 	var element;
-	console.log("119: " + array);
+	console.log("119: " + array.length);
 	var length = array.length;
 	for(var i=0; i<length;i++){
-    		element = array[i];
-			var node =  element.childNodes[0];
-			while(node != null){
-				if(node.nodeType == 3){ //Node type 3 is text
-					//console.log("Checking node");
-					node.textContent = convert(node.textContent);
+    	element = array[i];
+		var node =  element.childNodes[0];
+		var impArray;		
+		var metricArray;
+		while(node != null){
+			if(node.nodeType == 3 && node.textContent != null){ //Node type 3 is text
+				var text = node.textContent;
+				impArray = imperial_array(text);
+				console.log("95: " + impArray);
+				if (impArray!=null) {
+					metricArray = metric_array(impArray);
+					console.log("98: " + metricArray);
 				}
-			node = node.nextSibling;
 			}
+			node = node.nextSibling;
+		}
+		//
+		//console.log("102: met array : " + metricArray.length);
+		if(impArray != null){
+		console.log("REALLY WRITING REAL THINGS REALLY" + impArray.length);
+		for (var j = 0; j < impArray.length; j++) {
+		element.innerHTML = element.innerHTML.replace(impArray[j],metricArray[j]);}
+		}
 	}
-}
-catch(err){
-	console.log("EROR:" +err.toString());
-}
+
 console.log("Exiting");
