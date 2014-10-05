@@ -75,7 +75,7 @@ function adjust_unit(m_number, m_unit) {
 
 function replace_unit(s){
 	s = s.trim();
-	var impNum = parseFloat(s.substring(0, s.search("/s")));
+	var impNum = Number(s.substring(0, s.search("/s")));
 	var impUnit = s.substring(s.search("/s")).trim();
 	var metricNum;
 	var metricUnit;
