@@ -1,7 +1,7 @@
 var conversion_list = [
 	[" inch","m",0.0254],
 	[" inches","m",0.0254],
-	[" in.","m",0.0254],
+	[" in","m",0.0254],
 	[" foot","m",0.3048],
 	[" feet","m",0.3048],
 	[" ft","m",0.3048],
@@ -50,8 +50,8 @@ function adjust_unit(m_number, m_unit) {
 	var offsets = ["","k","M","G","T","P","E","Z","Y"];
 	var neg_offsets = ["","m","µ","n","p","f","a","z","y"];
 	var m_adj_unit;
-	console.log("m_number: " + m_number);
-	console.log("m_unit: " + m_unit);
+	//console.log("m_number: " + m_number);
+	//console.log("m_unit: " + m_unit);
 	
 	if(m_unit == "°c") {
 		m_number = (m_number-32)*(5.0/9.0);
@@ -73,14 +73,14 @@ function adjust_unit(m_number, m_unit) {
 		}
 	}
 	
-	console.log("m_number: " + m_number);
-	console.log("m_adj_unit: " + m_adj_unit);
+	//console.log("m_number: " + m_number);
+	//console.log("m_adj_unit: " + m_adj_unit);
 	
 	return m_number + " " + m_adj_unit;
 }
 
 function replace_unit(s){
-    //console.log("s: " + s);
+    console.log("s: " + s);
 	s = s.trim();
 	var divisor=0;
 	//console.log("s: after trim" + s);
@@ -92,14 +92,14 @@ function replace_unit(s){
 	//console.log("impUnit before: " + s.substring(divisor));
 	
 	var impNum = Number(s.substring(0,divisor));
-	var impUnit = s.substring(divisor);
+	var impUnit = s.substring(divisor).trim();
 	
 	if(typeof(impNum)=="undefined" || impNum.length==0 || s.substring(0,divisor).length==0) {
 	impNum = 1;
 	}
 	
-	//console.log("impNum: " + impNum);
-	//console.log("impUnit: " + impUnit);
+	console.log("impNum: " + impNum);
+	console.log("impUnit: " + impUnit);
 	
 	
 	
@@ -110,8 +110,8 @@ function replace_unit(s){
 		if (conversion_list[i][0] == " " + impUnit) {
 			metricUnit = conversion_list[i][1];
 			metricNum = impNum * conversion_list[i][2];
-			//console.log("metricUnit: " + metricUnit);
-	        //console.log("metricNum: " + metricNum);
+			console.log("metricUnit: " + metricUnit);
+	        console.log("metricNum: " + metricNum);
 			break;
 		}
 	}
