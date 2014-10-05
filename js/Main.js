@@ -24,8 +24,8 @@ var conversion_list = [
 	[" pound","g",453.6],
 	[" lb","g",453.6],
 	[" ton","g",907185],
-	[" fahrenheit","°c",""],
-	["°f","°c",""],
+	[" fahrenheit","°c",1],
+	["°f","°c",1],
 	[" mph","kph",1.609]
 	];
  
@@ -47,61 +47,69 @@ function RemoveOriginalMeasurement(x) {
 
 function adjust_unit(m_number, m_unit) {
 	var m_unit_shift = 0;
-	var offsets["","k","M","G","T","P","E","Z","Y"];
-	var neg_offsets["","m","µ","n","p","f","a","z","y"];
+	var offsets = ["","k","M","G","T","P","E","Z","Y"];
+	var neg_offsets = ["","m","µ","n","p","f","a","z","y"];
 	var m_adj_unit;
 	
-	while(m_number>1000 && m_unit_shift<8) {
-	m_number/=1000;
-	m_unit_shift++;
-	}
-	while(m_number<0 && m_unit_shift>-8) {
-	m_number*=1000;
-	m_unit_shift--;
-	}
-	
-	if(m_unit_shift>0) {
-	m_adj_unit = offsets[m_unit_shift] + m_unit;
+	if(m_unit == "°c") {
+		m_number = (m_number-32)*(5.0/9.0);
+		m_adj_unit = m_unit;
 	} else {
-	m_adj_unit = neg_offsets[m_unit_shift] + m_unit;
+		while(m_number>1000 && m_unit_shift<8) {
+			m_number/=1000;
+			m_unit_shift++;
+		}
+		while(m_number<0 && m_unit_shift>-8) {
+			m_number*=1000;
+			m_unit_shift--;
+		}
+		
+		if(m_unit_shift>0) {
+			m_adj_unit = offsets[m_unit_shift] + m_unit;
+		} else {
+			m_adj_unit = neg_offsets[m_unit_shift] + m_unit;
+		}
 	}
-	
-	return m_number+m_adj_unit;
+	return m_number + " " + m_adj_unit;
 }
 
-function replaceUnit(s){
-	var num,unitID,temp;
-	unitID =0;
-	console.log("RU 1");
-	num = grab_number(s,0);
-	console.log("RU 2: " + num);
-	var convert = parseFloat(num);
-	console.log("RU 3");
-	for (var i = 0;i < conversion_list.length;i++) {
-			temp =s.indexOf(conversion_list[i][0]);
-			if(temp > 0){unitID = i;}
+function replace_unit(s){
+	s = s.trim();
+	var impNum = parseFloat(s.substring(0, s.search("/s")));
+	var impUnit = s.substring(s.search("/s")).trim();
+	var metricNum;
+	var metricUnit;
+
+	for (var i = 0; i < 0; i++) {
+		if (conversion_list[i][0] == impUnit) {
+			metricUnit = conversion_list[i][1];
+			metricNum = impNum * conversion_list[i][2];
+			break;
+		}
 	}
-	console.log("RU 4 : " + unitID);
-	convert *= conversion_list[unitID][2];
-	console.log("RU DONE");
-	return " "+adjust_unit(convert+conversion_list[unitID][1])+" ";
+	return ;
+	return "<hover original='" + impNum + " " + impUnit + "' onmouseover='AddOriginalMeasurement(this)' onmouseout='RemoveOriginalMeasurement(this)'>" + adjust_unit(metricNum, metricUnit) + "</hover>";
 }
 
 function convert(text) {
 	var impArray = imperial_array(text);
-	var metricArray = metric_array(impArray);
-	for (int i = 0; i < impArray.legnth; i++) {
-		text = text.replace(impArray[i], metricArray[i]);
+	if (impArray!=null) {
+		var metricArray = metric_array(impArray);
+		console.log("95: " + impArray);
+		for (var i = 0; i < impArray.length; i++) {
+			text = text.replace(impArray[i], metricArray[i]);
+		}
 	}
 	return text;
 }
 
 function imperial_array (text) {
-	var regex = /\s[0-9]+[.]?[0-9]*\s(inch|inches|in|foot|feet|ft|yard|yd|mile|mi|teaspoon|tsp|tablespoon|tbsp|fluid\sounce|fl\soz|cup|pint|quart|gallon|ounce|oz|pound|lb|ton|fahrenheit|°f|mph|)[.]?\s/i;
+	var regex = /\s[0-9]+[.]?[0-9]*\s(inch|inches|in|foot|feet|ft|yard|yd|mile|mi|teaspoon|tsp|tablespoon|tbsp|fluid\sounce|fl\soz|cup|pint|quart|gallon|ounce|oz|pound|lb|ton|fahrenheit|°f|mph)[.]?[^a-zA-Z0-9]/i;
 	return text.match(regex);
 }
 
 function metric_array (impArray){
+	console.log("105: " + impArray);
 	var metricArray =  new Array(impArray.length);
 	for (var i = 0; i < impArray.length; i++) {
 		metricArray[i] = replace_unit(impArray[i]);
@@ -114,6 +122,7 @@ console.log("Started");
 try{
 	var array = document.body.getElementsByTagName("*");
 	var element;
+	console.log("119: " + array);
 	var length = array.length;
 	for(var i=0; i<length;i++){
     		element = array[i];
